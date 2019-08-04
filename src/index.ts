@@ -1,38 +1,28 @@
 #!/usr/bin/env node
+import Validator from "./helpers/validator";
+import Parser from "./helpers/parser";
+
 const chalk = require("chalk");
 const clear = require("clear");
 const figlet = require("figlet");
 const path = require("path");
 const program = require("commander");
-var fs = require("fs");
+const fs = require("fs");
 
 clear();
 console.log(
   chalk.red(figlet.textSync("robot-cli", { horizontalLayout: "full" }))
 );
 
-function fileDoesNotExist(path: any) {
-  try {
-    if (fs.existsSync(path)) {
-      return false;
-    }
-  } catch (err) {}
-  return true;
-}
-
-function parseFile(path: any) {
-  return fs
-    .readFileSync(path)
-    .toString()
-    .split("\n");
-}
-
 function run(path: any) {
-  if (fileDoesNotExist(path)) {
-    console.error(`no such file or directory, ${path}`);
+  let validator = new Validator();
+  let error = validator.validateFile(path);
+  if (Object.keys(error).length > 0) {
+    console.log(error.message); //todo print all errors
     return;
   }
-  const commands = parseFile(path);
+  const parser = new Parser();
+  const commands = parser.parseFile(path);
   console.log(commands);
 }
 

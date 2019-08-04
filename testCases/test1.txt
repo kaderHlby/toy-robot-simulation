@@ -1,2 +1,2 @@
-place
-rotate
+PLACE 1,2,E
+LEFT
