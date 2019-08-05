@@ -4,17 +4,18 @@ Node.js cli application for simulation of a toy robot moving on a square table.
 
 ### Prerequisites
 
-To use this project, you'll need NodeJS. Visit http://www.nodejs.org to download and learn more!
+- [NodeJS](http://www.nodejs.org)
+- Node Version Manager [nvm](https://github.com/nvm-sh/nvm) version 0.32.1
 
 ### Installing on Unix and macOS
 
-1. clone the repo
+1. clone the repository
 
 ```bash
 git clone git@github.com:kaderHlby/toy-robot-simulation.git
 ```
 
-2. Change to the repo directory:
+2. Change to the repository directory:
 
 ```
 cd toy-robot-simulation
@@ -32,16 +33,16 @@ npm install -g typescript
 npm install
 ```
 
-5. link ropot
+5. link robot
 
 ```bash
-npm link ropot
+npm link robot
 ```
 
 6. finally run:
 
 ```bash
-ropot -h
+robot -h
 ```
 
 you should see
@@ -66,12 +67,14 @@ robot -p ./testCases/exampleC.txt
 
 ## Running the tests
 
-to be added later
-escripot
+```bash
+npm run test-mocha
+```
 
 ## Built With
 
-- [TypeScript](https://github.com/microsoft/TypeScript) 
+- [TypeScript](https://github.com/microsoft/TypeScript)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
