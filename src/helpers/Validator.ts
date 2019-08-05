@@ -16,7 +16,7 @@ export default class Validator {
     return false;
   }
 
-  private validateCommands(commands: string[]): any {
+  public validateCommands(commands: string[]): any {
     const firstCommand = commands[0].split(" ");
     if (CommandObject.PLACE != firstCommand[0]) {
       return {
