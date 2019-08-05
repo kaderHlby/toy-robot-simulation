@@ -3,7 +3,7 @@ export default class RobotManager {
     /**
      * createRobot
      */
-    createRobot(tableSize: number, x: number, y: number, face: string, table: ITable): any;
+    createRobot(x: number, y: number, face: string, table: ITable): any;
     private getFaceObjByStringKey;
     /**
      * createTable

@@ -97,7 +97,7 @@ export class Robot {
 
   private right(): void {}
 
-  executeCommands(commands: Array<string>): string {
+  executeCommands(commands: Array<string>): void {
     commands.forEach(command => {
       if (command == CommandObject.MOVE) {
         this.move();
@@ -105,13 +105,13 @@ export class Robot {
         this.left();
       } else if (command == CommandObject.RIGHT) {
         this.right();
+      } else if (command == CommandObject.REPORT) {
+        this.report();
       }
     });
-
-    return this.report();
   }
 
-  report(): string {
-    return `${this._X},${this._Y},${this._face.name}`;
+  report(): void {
+    console.log(`${this._X},${this._Y},${this._face.name}`);
   }
 }

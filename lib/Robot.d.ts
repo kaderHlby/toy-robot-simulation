@@ -28,6 +28,6 @@ export declare class Robot {
     private move;
     private left;
     private right;
-    executeCommands(commands: Array<string>): string;
-    report(): string;
+    executeCommands(commands: Array<string>): void;
+    report(): void;
 }
