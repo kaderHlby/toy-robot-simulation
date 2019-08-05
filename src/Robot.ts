@@ -95,7 +95,9 @@ export class Robot {
     this._face = this.getNextLeft();
   }
 
-  private right(): void {}
+  private right(): void {
+    this._face = this.getNextRight();
+  }
 
   executeCommands(commands: Array<string>): void {
     commands.forEach(command => {
