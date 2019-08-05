@@ -14,9 +14,14 @@ export default class RobotManager {
     face: string
   ): any {
     let validator = new Validator();
-    let validateFaceError = validator.validateFace(face);
+    let validateFaceError = validator.validateFace(face); // todo throw exception instead of returning error obj
     if (Object.keys(validateFaceError).length > 0) {
       console.log(validateFaceError.message);
+      return;
+    }
+    let validatePlaceError = validator.validatePlace(x, y, tableSize); // todo throw exception instead of returning error obj
+    if (Object.keys(validatePlaceError).length > 0) {
+      console.log(validatePlaceError.message);
       return;
     }
     const table: ITable = { size: tableSize };

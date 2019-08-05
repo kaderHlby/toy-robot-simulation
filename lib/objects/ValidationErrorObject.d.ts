@@ -4,5 +4,6 @@ declare let ValidationErrorObject: {
     notValidCommand: string;
     notValidFace: string;
     mustBeANumber: string;
+    mustBeLessThanTableSize: string;
 };
 export { ValidationErrorObject };

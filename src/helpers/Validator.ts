@@ -64,6 +64,20 @@ export default class Validator {
     return {};
   }
 
+  public validatePlace(x: number, y: number, tableSize: number): any {
+    if (x > tableSize) {
+      return {
+        message: `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
+      };
+    }
+    if (y > tableSize) {
+      return {
+        message: `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
+      };
+    }
+    return {};
+  }
+
   public validateFile(path: any): any {
     if (!this.fileExists(path)) {
       return { message: ValidationErrorObject.fileDoesNotExist + path };
