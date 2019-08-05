@@ -5,5 +5,6 @@ declare let ValidationErrorObject: {
     notValidFace: string;
     mustBeANumber: string;
     mustBeLessThanTableSize: string;
+    mustBeGreaterThanOrigin: string;
 };
 export { ValidationErrorObject };

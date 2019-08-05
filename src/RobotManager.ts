@@ -19,11 +19,6 @@ export default class RobotManager {
       console.log(validateFaceError.message);
       return;
     }
-    let validatePlaceError = validator.validatePlace(x, y, table.size); // todo throw exception instead of returning error obj
-    if (Object.keys(validatePlaceError).length > 0) {
-      console.log(validatePlaceError.message);
-      return;
-    }
     const faceObj = this.getFaceObjByStringKey(face); // sorry for this but i face an issue with getting obj by string key , there must be different way
     return new Robot(x, y, faceObj, table);
   }

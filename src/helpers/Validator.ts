@@ -4,6 +4,7 @@ import { CommandObject } from "../objects/CommandObject";
 import { ValidationErrorObject } from "../objects/ValidationErrorObject";
 import { Robot } from "../Robot";
 import { FaceObject } from "../objects/FaceObject";
+import { ITable } from "../interfaces/ITable";
 
 export default class Validator {
   private fileExists(path: any): any {
@@ -64,15 +65,25 @@ export default class Validator {
     return {};
   }
 
-  public validatePlace(x: number, y: number, tableSize: number): any {
-    if (x > tableSize) {
+  public validatePlace(x: number, y: number, table: ITable): any {
+    if (x > table.size) {
       return {
         message: `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
       };
     }
-    if (y > tableSize) {
+    if (x < table.originX) {
+      return {
+        message: `x : ${x} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+      };
+    }
+    if (y > table.size) {
       return {
         message: `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
+      };
+    }
+    if (y < table.originY) {
+      return {
+        message: `y : ${y} ` + ValidationErrorObject.mustBeGreaterThanOrigin
       };
     }
     return {};
