@@ -12,12 +12,12 @@ let FaceObject = {
   },
   WEST: {
     name: `WEST`,
-    xStep: 1,
+    xStep: -1,
     yStep: 0
   },
   EAST: {
     name: `EAST`,
-    xStep: -1,
+    xStep: 1,
     yStep: 0
   }
 };

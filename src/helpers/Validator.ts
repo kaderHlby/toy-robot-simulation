@@ -25,13 +25,13 @@ export default class Validator {
     const parser = new Parser();
     let { x, y, face } = parser.getPlaceValues(commands[0]);
 
-    if (!Number(x)) {
+    if (typeof x == "number") {
       return {
         message:
           `line 1: X ` + ValidationErrorObject.mustBeANumber + `${x} is given`
       };
     }
-    if (!Number(y)) {
+    if (typeof x == "number") {
       return {
         message:
           `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
@@ -89,10 +89,12 @@ export default class Validator {
   }
 
   public validateMove(robot: Robot): boolean {
-    // return (
-    //   robot.getNextPosition.x <= robot.getTableSize &&
-    //   robot.getNextPosition.y <= robot.getTableSize
-    // );
-    return true;
+    let { x, y } = robot.getNextPosition();
+    return (
+      x <= robot.getTableSize() &&
+      x >= robot.getOriginX() &&
+      y <= robot.getTableSize() &&
+      y >= robot.getOriginY()
+    );
   }
 }

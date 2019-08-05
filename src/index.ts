@@ -28,11 +28,11 @@ function run(path: any) {
   // we already validate that first command is place
   let { x, y, face } = parser.getPlaceValues(commands[0]);
   let robotManager = new RobotManager();
-  // create robot
   const tableSize = 5;
-  const robot = robotManager.createRobot(tableSize, x, y, face);
-  console.log(robot);
-  // run commands and return robot position
+  const table = robotManager.createTable(5, 0, 0);
+  const robot = robotManager.createRobot(tableSize, x, y, face, table);
+  let report = robot.executeCommands(commands);
+  console.log(report);
 }
 
 program

@@ -1,2 +1,0 @@
-PLACE 1,2,EAST
-LEFT

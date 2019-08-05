@@ -11,7 +11,8 @@ export default class RobotManager {
     tableSize: number,
     x: number,
     y: number,
-    face: string
+    face: string,
+    table: ITable
   ): any {
     let validator = new Validator();
     let validateFaceError = validator.validateFace(face); // todo throw exception instead of returning error obj
@@ -24,7 +25,6 @@ export default class RobotManager {
       console.log(validatePlaceError.message);
       return;
     }
-    const table: ITable = { size: tableSize };
     const faceObj = this.getFaceObjByStringKey(face); // sorry for this but i face an issue with getting obj by string key , there must be different way
     return new Robot(x, y, faceObj, table);
   }
@@ -39,5 +39,11 @@ export default class RobotManager {
       }
     }
     return robotFace;
+  }
+  /**
+   * createTable
+   */
+  public createTable(tableSize: number, originX: number, originY: number) {
+    return { size: tableSize, originX: originX, originY: originY };
   }
 }
