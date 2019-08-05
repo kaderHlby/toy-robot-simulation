@@ -1,4 +1,4 @@
-let Commands = {
+let CommandObject = {
   PLACE: "PLACE",
   MOVE: "MOVE",
   LEFT: "LEFT",
@@ -6,4 +6,4 @@ let Commands = {
   REPORT: "REPORT"
 };
 
-export { Commands };
+export { CommandObject };
