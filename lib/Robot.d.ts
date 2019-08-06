@@ -25,9 +25,9 @@ export declare class Robot {
         xStep: number;
         yStep: number;
     };
-    private move;
     private left;
     private right;
+    private move;
+    private report;
     executeCommands(commands: Array<string>): void;
-    report(): void;
 }

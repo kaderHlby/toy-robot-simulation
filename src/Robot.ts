@@ -17,6 +17,7 @@ export class Robot {
     this._face = face;
     this._table = table;
   }
+  
   public getX(): number {
     return this._X;
   }
@@ -82,6 +83,14 @@ export class Robot {
     }
   }
 
+  private left(): void {
+    this._face = this.getNextLeft();
+  }
+
+  private right(): void {
+    this._face = this.getNextRight();
+  }
+
   private move(): void {
     let validator = new Validator();
     if (validator.validateMove(this)) {
@@ -91,15 +100,11 @@ export class Robot {
     //else ignore invalid move
   }
 
-  private left(): void {
-    this._face = this.getNextLeft();
+  private report(): void {
+    console.log(`${this._X},${this._Y},${this._face.name}`);
   }
 
-  private right(): void {
-    this._face = this.getNextRight();
-  }
-
-  executeCommands(commands: Array<string>): void {
+  public executeCommands(commands: Array<string>): void {
     commands.forEach(command => {
       if (command == CommandObject.MOVE) {
         this.move();
@@ -111,9 +116,5 @@ export class Robot {
         this.report();
       }
     });
-  }
-
-  report(): void {
-    console.log(`${this._X},${this._Y},${this._face.name}`);
   }
 }

@@ -1,14 +1,14 @@
-import { ITable } from "./interfaces/ITable";
+import { Robot } from "./Robot";
 export default class RobotManager {
     /**
      * createRobot
      */
-    createRobot(x: number, y: number, face: string, table: ITable): any;
+    createRobot(placeCommand: string): Robot;
     private getFaceObjByStringKey;
     /**
      * createTable
      */
-    createTable(tableSize: number, originX: number, originY: number): {
+    getTable(): {
         size: number;
         originX: number;
         originY: number;

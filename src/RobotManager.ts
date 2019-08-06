@@ -1,24 +1,16 @@
 import { Robot } from "./Robot";
-import Validator from "./helpers/Validator";
-import { ITable } from "./interfaces/ITable";
 import { FaceObject } from "./objects/FaceObject";
+import { ConfigObject } from "./objects/ConfigObject";
+import Parser from "./helpers/Parser";
 
 export default class RobotManager {
   /**
    * createRobot
    */
-  public createRobot(
-    x: number,
-    y: number,
-    face: string,
-    table: ITable
-  ): any {
-    let validator = new Validator();
-    let validateFaceError = validator.validateFace(face); // todo throw exception instead of returning error obj
-    if (Object.keys(validateFaceError).length > 0) {
-      console.log(validateFaceError.message);
-      return;
-    }
+  public createRobot(placeCommand: string): Robot {
+    const table = this.getTable(); // size 5 x 5 and origin is (0,0) you can change it from configObject
+    const parser = new Parser();
+    let { x, y, face } = parser.getPlaceValues(placeCommand);
     const faceObj = this.getFaceObjByStringKey(face); // sorry for this but i face an issue with getting obj by string key , there must be different way
     return new Robot(x, y, faceObj, table);
   }
@@ -34,10 +26,15 @@ export default class RobotManager {
     }
     return robotFace;
   }
+
   /**
    * createTable
    */
-  public createTable(tableSize: number, originX: number, originY: number) {
-    return { size: tableSize, originX: originX, originY: originY };
+  public getTable() {
+    return {
+      size: ConfigObject.size,
+      originX: ConfigObject.originX,
+      originY: ConfigObject.originY
+    };
   }
 }

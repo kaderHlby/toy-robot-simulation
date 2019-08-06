@@ -4,99 +4,107 @@ import { CommandObject } from "../objects/CommandObject";
 import { ValidationErrorObject } from "../objects/ValidationErrorObject";
 import { Robot } from "../Robot";
 import { FaceObject } from "../objects/FaceObject";
-import { ITable } from "../interfaces/ITable";
+import { ValidationRuleObject } from "../objects/ValidationRuleObject";
+import CommandFileReader from "./CommandFileReader";
+import RobotManager from "../RobotManager";
 
 export default class Validator {
-  private fileExists(path: any): any {
+  public fileExists(path: any): void {
     try {
       if (fs.existsSync(path)) {
-        return true;
+        return;
       }
     } catch (err) {}
-    return false;
+    throw new Error(ValidationErrorObject.fileDoesNotExist + path);
   }
 
-  public validateCommands(commands: string[]): any {
-    const firstCommand = commands[0].split(" ");
-    if (CommandObject.PLACE != firstCommand[0]) {
-      return {
-        message: ValidationErrorObject.firstCommand + CommandObject.PLACE
-      };
+  public firstCommandIsPlaceCommand(firstCommand: string): void {
+    if (CommandObject.PLACE != firstCommand.split(" ")[0]) {
+      throw new Error(ValidationErrorObject.firstCommand + CommandObject.PLACE);
     }
-    const parser = new Parser();
-    let { x, y, face } = parser.getPlaceValues(commands[0]);
+  }
 
-    if (typeof x == "number") {
-      return {
-        message:
-          `line 1: X ` + ValidationErrorObject.mustBeANumber + `${x} is given`
-      };
-    }
-    if (typeof x == "number") {
-      return {
-        message:
-          `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
-      };
-    }
-    var validateFaceError = this.validateFace(face);
-    if (Object.keys(validateFaceError).length > 0) {
-      return validateFaceError;
-    }
-
+  public allCommandsAreValid(commands: Array<string>): void {
+    // start from second command, since the first one should be place
     for (let index = 1; index < commands.length; index++) {
       const command = commands[index];
       if (Object.values(CommandObject).indexOf(command) == -1) {
-        return {
-          message:
-            `line ${index + 1}: ${command}` +
-            ValidationErrorObject.notValidCommand
-        };
+        throw new Error(
+          `line ${index + 1}: ${command}` + ValidationErrorObject.invalidCommand
+        );
       } //todo handle multiple place commands
     }
-    return {};
   }
 
-  public validateFace(face: string): any {
-    if (Object.keys(FaceObject).indexOf(face) == -1) {
-      return {
-        message: `${face}` + ValidationErrorObject.notValidFace
-      };
+  public validatePlaceCommand(placeCommand: string): void {
+    const parser = new Parser();
+    let { x, y, face } = parser.getPlaceValues(placeCommand);
+    // validate x,y type
+    if (isNaN(Number(x))) {
+      throw new Error(
+        `line 1: X ` + ValidationErrorObject.mustBeANumber + `${x} is given`
+      );
     }
-    return {};
-  }
+    if (isNaN(Number(y))) {
+      throw new Error(
+        `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
+      );
+    }
 
-  public validatePlace(x: number, y: number, table: ITable): any {
+    const robotManager = new RobotManager();
+    const table = robotManager.getTable();
+
+    // validate x,y values with the table size and origin
     if (x > table.size) {
-      return {
-        message: `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
-      };
+      throw new Error(
+        `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
+      );
     }
     if (x < table.originX) {
-      return {
-        message: `x : ${x} ` + ValidationErrorObject.mustBeGreaterThanOrigin
-      };
+      throw new Error(
+        `x : ${x} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+      );
     }
     if (y > table.size) {
-      return {
-        message: `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
-      };
+      throw new Error(
+        `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
+      );
     }
     if (y < table.originY) {
-      return {
-        message: `y : ${y} ` + ValidationErrorObject.mustBeGreaterThanOrigin
-      };
+      throw new Error(
+        `y : ${y} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+      );
     }
-    return {};
+
+    // validate face
+    if (Object.keys(FaceObject).indexOf(face) == -1) {
+      throw new Error(`${face}` + ValidationErrorObject.invalidFace);
+    }
   }
 
-  public validateFile(path: any): any {
-    if (!this.fileExists(path)) {
-      return { message: ValidationErrorObject.fileDoesNotExist + path };
+  public validate(path: string, validationRules: Array<string>): void {
+    if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
+      this.fileExists(path);
     }
 
-    const parser = new Parser();
-    const commands = parser.parseFile(path);
-    return this.validateCommands(commands);
+    const commandFileReader = new CommandFileReader(path);
+    const firstCommand = commandFileReader.getFirstCommands();
+    const commands = commandFileReader.getCommands();
+
+    if (
+      validationRules.indexOf(ValidationRuleObject.allCommandsAreValid) > -1
+    ) {
+      this.allCommandsAreValid(commands);
+    }
+    if (
+      validationRules.indexOf(ValidationRuleObject.firstCommandIsPlaceCommand) >
+      -1
+    ) {
+      this.firstCommandIsPlaceCommand(firstCommand);
+    }
+    if (validationRules.indexOf(ValidationRuleObject.validPlaceCommand) > -1) {
+      this.validatePlaceCommand(firstCommand);
+    }
   }
 
   public validateMove(robot: Robot): boolean {
