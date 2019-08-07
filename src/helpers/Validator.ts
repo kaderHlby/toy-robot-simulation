@@ -37,7 +37,9 @@ export default class Validator {
       const command = commands[index];
       if (Object.values(CommandObject).indexOf(command) == -1) {
         throw new Error(
-          `line ${index + 1}: ${command}` + ValidationErrorObject.invalidCommand
+          `line ${index + 1}: ${command} ${
+            ValidationErrorObject.invalidCommand
+          }`
         );
       } //todo handle multiple place commands
     }
@@ -49,40 +51,40 @@ export default class Validator {
     // validate x,y type
     if (isNaN(Number(x))) {
       throw new Error(
-        `line 1: X ` + ValidationErrorObject.mustBeANumber + `${x} is given`
+        `line 1: X ${ValidationErrorObject.mustBeANumber} ${x} is given`
       );
     }
     if (isNaN(Number(y))) {
       throw new Error(
-        `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
+        `line 1: Y ${ValidationErrorObject.mustBeANumber} ${y} is given`
       );
     }
 
     // validate x,y values with the table size and origin
     if (x > table.size) {
       throw new Error(
-        `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
+        `x : ${x}  ${ValidationErrorObject.mustBeLessThanTableSize}`
       );
     }
     if (x < table.originX) {
       throw new Error(
-        `x : ${x} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+        `x : ${x} ${ValidationErrorObject.mustBeGreaterThanOrigin}`
       );
     }
     if (y > table.size) {
       throw new Error(
-        `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
+        `y : ${y} ${ValidationErrorObject.mustBeLessThanTableSize}`
       );
     }
     if (y < table.originY) {
       throw new Error(
-        `y : ${y} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+        `y : ${y} ${ValidationErrorObject.mustBeGreaterThanOrigin}`
       );
     }
 
     // validate face
     if (Object.keys(FaceObject).indexOf(face) == -1) {
-      throw new Error(`${face}` + ValidationErrorObject.invalidFace);
+      throw new Error(`${face} ${ValidationErrorObject.invalidFace}`);
     }
   }
 
