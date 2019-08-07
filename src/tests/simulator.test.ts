@@ -8,12 +8,12 @@ let commands = ["PLACE 1,0,NORTH", "MOVE", "REPORT"]; // mock getting commands f
 const parser = new Parser();
 let { x, y, face } = parser.getPlaceValues(commands[0]);
 let robotManager = new RobotManager();
-// const robot = robotManager.createRobot(x, y, face, table);
+const robot = robotManager.createRobot(x, y, face);
 
 describe("simulator", function() {
-  // it("executeCommands", function() {
-  //   let spy = sinon.spy(console, "log");
-  //   robot.executeCommands(commands);
-  //   expect(spy.calledWith('1,1,NORTH'));
-  // });
+  it("executeCommands", function() {
+    let spy = sinon.spy(console, "log");
+    robot.executeCommands(commands);
+    expect(spy.calledWith('1,1,NORTH'));
+  });
 });

@@ -3,7 +3,7 @@ export default class RobotManager {
     /**
      * createRobot
      */
-    createRobot(placeCommand: string): Robot;
+    createRobot(x: number, y: number, face: string): Robot;
     private getFaceObjByStringKey;
     /**
      * createTable

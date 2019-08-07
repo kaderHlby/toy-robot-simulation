@@ -7,11 +7,9 @@ export default class RobotManager {
   /**
    * createRobot
    */
-  public createRobot(placeCommand: string): Robot {
+  public createRobot(x: number, y: number, face: string): Robot {
     const table = this.getTable(); // size 5 x 5 and origin is (0,0) you can change it from configObject
-    const parser = new Parser();
-    let { x, y, face } = parser.getPlaceValues(placeCommand);
-    const faceObj = this.getFaceObjByStringKey(face); // sorry for this but i face an issue with getting obj by string key , there must be different way
+    const faceObj = this.getFaceObjByStringKey(face); // sorry for this but i tried getting the value by index like faceObj[face] but didn't work, there must be different way
     return new Robot(x, y, faceObj, table);
   }
 

@@ -1,5 +1,6 @@
 declare let ValidationErrorObject: {
     fileDoesNotExist: string;
+    fileIsEmpty: string;
     firstCommand: string;
     invalidCommand: string;
     invalidFace: string;

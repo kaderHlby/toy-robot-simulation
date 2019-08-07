@@ -17,10 +17,19 @@ export default class CommandFileReader {
   /**
    * getCommandsFromFile
    */
-  public getCommands(): Array<string> {
-    return fs
+  public getCommands(): any {
+    let commands = fs
       .readFileSync(this._filePath)
       .toString()
-      .split("\n");
+      .trim();
+      
+    // return empty array in case the file is empty
+    if (commands) {
+      return commands
+        .split("\n")
+        .map(Function.prototype.call, String.prototype.trim); // trim each command
+    }
+
+    return [];
   }
 }

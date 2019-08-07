@@ -4,3 +4,4 @@ let ConfigObject = {
   originY: 0
 };
 export { ConfigObject };
+// todo : use config package instead 

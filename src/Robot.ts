@@ -17,7 +17,7 @@ export class Robot {
     this._face = face;
     this._table = table;
   }
-  
+
   public getX(): number {
     return this._X;
   }
@@ -101,17 +101,21 @@ export class Robot {
   }
 
   private report(): void {
-    console.log(`${this._X},${this._Y},${this._face.name}`);
+    console.log(`\ncurrnet place : ${this._X},${this._Y},${this._face.name}`);
   }
 
-  public executeCommands(commands: Array<string>): void {
+  public executeCommands(commands: Array<string>, log?: boolean): void {
+    if (log) console.log(`executing commands...\n`);
     commands.forEach(command => {
       if (command == CommandObject.MOVE) {
         this.move();
+        if (log) console.log("moving");
       } else if (command == CommandObject.LEFT) {
         this.left();
+        if (log) console.log("rotating left");
       } else if (command == CommandObject.RIGHT) {
         this.right();
+        if (log) console.log("rotating right");
       } else if (command == CommandObject.REPORT) {
         this.report();
       }

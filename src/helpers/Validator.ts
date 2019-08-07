@@ -6,7 +6,7 @@ import { Robot } from "../Robot";
 import { FaceObject } from "../objects/FaceObject";
 import { ValidationRuleObject } from "../objects/ValidationRuleObject";
 import CommandFileReader from "./CommandFileReader";
-import RobotManager from "../RobotManager";
+import { ITable } from "../interfaces/ITable";
 
 export default class Validator {
   public fileExists(path: any): void {
@@ -18,6 +18,13 @@ export default class Validator {
     throw new Error(ValidationErrorObject.fileDoesNotExist + path);
   }
 
+  public fileNotEmpty(path: any): void {
+    const commandFileReader = new CommandFileReader(path);
+    const commands = commandFileReader.getCommands();
+    if (commands.length == 0) {
+      throw new Error(ValidationErrorObject.fileIsEmpty);
+    }
+  }
   public firstCommandIsPlaceCommand(firstCommand: string): void {
     if (CommandObject.PLACE != firstCommand.split(" ")[0]) {
       throw new Error(ValidationErrorObject.firstCommand + CommandObject.PLACE);
@@ -30,61 +37,68 @@ export default class Validator {
       const command = commands[index];
       if (Object.values(CommandObject).indexOf(command) == -1) {
         throw new Error(
-          `line ${index + 1}: ${command}` + ValidationErrorObject.invalidCommand
+          `line ${index + 1}: ${command} ${
+            ValidationErrorObject.invalidCommand
+          }`
         );
       } //todo handle multiple place commands
     }
   }
 
-  public validatePlaceCommand(placeCommand: string): void {
+  public validatePlaceCommand(placeCommand: string, table: ITable): void {
     const parser = new Parser();
     let { x, y, face } = parser.getPlaceValues(placeCommand);
     // validate x,y type
     if (isNaN(Number(x))) {
       throw new Error(
-        `line 1: X ` + ValidationErrorObject.mustBeANumber + `${x} is given`
+        `line 1: X ${ValidationErrorObject.mustBeANumber} ${x} is given`
       );
     }
     if (isNaN(Number(y))) {
       throw new Error(
-        `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
+        `line 1: Y ${ValidationErrorObject.mustBeANumber} ${y} is given`
       );
     }
-
-    const robotManager = new RobotManager();
-    const table = robotManager.getTable();
 
     // validate x,y values with the table size and origin
     if (x > table.size) {
       throw new Error(
-        `x : ${x} ` + ValidationErrorObject.mustBeLessThanTableSize
+        `x : ${x}  ${ValidationErrorObject.mustBeLessThanTableSize}`
       );
     }
     if (x < table.originX) {
       throw new Error(
-        `x : ${x} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+        `x : ${x} ${ValidationErrorObject.mustBeGreaterThanOrigin}`
       );
     }
     if (y > table.size) {
       throw new Error(
-        `y : ${y} ` + ValidationErrorObject.mustBeLessThanTableSize
+        `y : ${y} ${ValidationErrorObject.mustBeLessThanTableSize}`
       );
     }
     if (y < table.originY) {
       throw new Error(
-        `y : ${y} ` + ValidationErrorObject.mustBeGreaterThanOrigin
+        `y : ${y} ${ValidationErrorObject.mustBeGreaterThanOrigin}`
       );
     }
 
     // validate face
     if (Object.keys(FaceObject).indexOf(face) == -1) {
-      throw new Error(`${face}` + ValidationErrorObject.invalidFace);
+      throw new Error(`${face} ${ValidationErrorObject.invalidFace}`);
     }
   }
 
-  public validate(path: string, validationRules: Array<string>): void {
+  public validate(
+    path: string,
+    table: ITable,
+    validationRules: Array<string>
+  ): void {
     if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
       this.fileExists(path);
+    }
+
+    if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
+      this.fileNotEmpty(path);
     }
 
     const commandFileReader = new CommandFileReader(path);
@@ -103,7 +117,7 @@ export default class Validator {
       this.firstCommandIsPlaceCommand(firstCommand);
     }
     if (validationRules.indexOf(ValidationRuleObject.validPlaceCommand) > -1) {
-      this.validatePlaceCommand(firstCommand);
+      this.validatePlaceCommand(firstCommand, table);
     }
   }
 

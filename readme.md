@@ -4,8 +4,8 @@ Node.js cli application for simulation of a toy robot moving on a square table.
 
 ### Prerequisites
 
-- [NodeJS](http://www.nodejs.org)
-- Node Version Manager [nvm](https://github.com/nvm-sh/nvm) version 0.32.1
+- [NodeJS](http://www.nodejs.org) build and tested using node v10.16.0
+- Node Version Manager [nvm](https://github.com/nvm-sh/nvm)
 
 ### Installing on Unix and macOS
 
@@ -45,14 +45,26 @@ npm link robot
 robot -h
 ```
 
-you should see
+or using the npm
+
+```bash
+npm run robot-help
+```
+
+you should see:
 
 ```
+  _ __    ___   | |__     ___   | |_            ___  | | (_)
+ | '__|  / _ \  | '_ \   / _ \  | __|  _____   / __| | | | |
+ | |    | (_) | | |_) | | (_) | | |_  |_____| | (__  | | | |
+ |_|     \___/  |_.__/   \___/   \__|          \___| |_| |_|
+
 Usage: robot [options]
 
 Options:
   -V, --version      output the version number
   -p, --path <path>  commands file path
+  -l, --log          print each step to console
   -h, --help         output usage information
 
 ```
@@ -60,9 +72,17 @@ Options:
 ## Run application with test data
 
 ```bash
-robot -p ./testCases/exampleA.txt
-robot -p ./testCases/exampleB.txt
-robot -p ./testCases/exampleC.txt
+robot -l -p testCases/exampleA.txt
+robot -l -p testCases/exampleB.txt
+robot -l -p testCases/exampleC.txt
+```
+
+or using the npm
+
+```bash
+npm run robot-path testCases/exampleA.txt
+npm run robot-path testCases/exampleB.txt
+npm run robot-path testCases/exampleC.txt
 ```
 
 ## Running the tests
