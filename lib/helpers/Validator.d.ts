@@ -2,6 +2,7 @@ import { Robot } from "../Robot";
 import { ITable } from "../interfaces/ITable";
 export default class Validator {
     fileExists(path: any): void;
+    fileNotEmpty(path: any): void;
     firstCommandIsPlaceCommand(firstCommand: string): void;
     allCommandsAreValid(commands: Array<string>): void;
     validatePlaceCommand(placeCommand: string, table: ITable): void;

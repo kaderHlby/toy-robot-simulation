@@ -6,7 +6,6 @@ import { Robot } from "../Robot";
 import { FaceObject } from "../objects/FaceObject";
 import { ValidationRuleObject } from "../objects/ValidationRuleObject";
 import CommandFileReader from "./CommandFileReader";
-import RobotManager from "../RobotManager";
 import { ITable } from "../interfaces/ITable";
 
 export default class Validator {
@@ -19,6 +18,13 @@ export default class Validator {
     throw new Error(ValidationErrorObject.fileDoesNotExist + path);
   }
 
+  public fileNotEmpty(path: any): void {
+    const commandFileReader = new CommandFileReader(path);
+    const commands = commandFileReader.getCommands();
+    if (commands.length == 0) {
+      throw new Error(ValidationErrorObject.fileIsEmpty);
+    }
+  }
   public firstCommandIsPlaceCommand(firstCommand: string): void {
     if (CommandObject.PLACE != firstCommand.split(" ")[0]) {
       throw new Error(ValidationErrorObject.firstCommand + CommandObject.PLACE);
@@ -87,6 +93,10 @@ export default class Validator {
   ): void {
     if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
       this.fileExists(path);
+    }
+
+    if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
+      this.fileNotEmpty(path);
     }
 
     const commandFileReader = new CommandFileReader(path);

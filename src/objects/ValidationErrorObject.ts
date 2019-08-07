@@ -1,5 +1,6 @@
 let ValidationErrorObject = {
   fileDoesNotExist: `no such file: `,
+  fileIsEmpty: `file is empty `,
   firstCommand: `first command must be `,
   invalidCommand: ` is not a valid command.`,
   invalidFace: ` is not a valid face.`,

@@ -8,5 +8,5 @@ export default class CommandFileReader {
     /**
      * getCommandsFromFile
      */
-    getCommands(): Array<string>;
+    getCommands(): any;
 }

@@ -24,9 +24,11 @@ function run(path: any, log: any) {
   const robotManager = new RobotManager();
   const commandFileReader = new CommandFileReader(path);
   const parser = new Parser();
+
   try {
     const validationRules = [
       ValidationRuleObject.fileExist,
+      ValidationRuleObject.fileNotEmpty,
       ValidationRuleObject.firstCommandIsPlaceCommand,
       ValidationRuleObject.validPlaceCommand,
       ValidationRuleObject.allCommandsAreValid
@@ -35,7 +37,7 @@ function run(path: any, log: any) {
     const table = robotManager.getTable();
 
     validator.validate(path, table, validationRules);
-
+    
     const commands = commandFileReader.getCommands();
     const placeCommand = commandFileReader.getFirstCommands();
     let { x, y, face } = parser.getPlaceValues(placeCommand);
