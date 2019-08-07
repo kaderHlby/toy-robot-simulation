@@ -42,7 +42,7 @@ describe("validate", function() {
     const invalidPlaceCommand = "PLACE a,2,EAST";
 
     expect(function() {
-      validator.validatePlaceCommand(invalidPlaceCommand);
+      validator.validatePlaceCommand(invalidPlaceCommand, table);
     }).to.throw(ValidationErrorObject.mustBeANumber);
   });
 
@@ -50,7 +50,7 @@ describe("validate", function() {
     const invalidPlaceCommand = "PLACE 1,2,EAS";
 
     expect(function() {
-      validator.validatePlaceCommand(invalidPlaceCommand);
+      validator.validatePlaceCommand(invalidPlaceCommand, table);
     }).to.throw(ValidationErrorObject.invalidFace);
   });
 });

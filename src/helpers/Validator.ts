@@ -7,6 +7,7 @@ import { FaceObject } from "../objects/FaceObject";
 import { ValidationRuleObject } from "../objects/ValidationRuleObject";
 import CommandFileReader from "./CommandFileReader";
 import RobotManager from "../RobotManager";
+import { ITable } from "../interfaces/ITable";
 
 export default class Validator {
   public fileExists(path: any): void {
@@ -36,7 +37,7 @@ export default class Validator {
     }
   }
 
-  public validatePlaceCommand(placeCommand: string): void {
+  public validatePlaceCommand(placeCommand: string, table: ITable): void {
     const parser = new Parser();
     let { x, y, face } = parser.getPlaceValues(placeCommand);
     // validate x,y type
@@ -50,9 +51,6 @@ export default class Validator {
         `line 1: Y ` + ValidationErrorObject.mustBeANumber + `${y} is given`
       );
     }
-
-    const robotManager = new RobotManager();
-    const table = robotManager.getTable();
 
     // validate x,y values with the table size and origin
     if (x > table.size) {
@@ -82,7 +80,11 @@ export default class Validator {
     }
   }
 
-  public validate(path: string, validationRules: Array<string>): void {
+  public validate(
+    path: string,
+    table: ITable,
+    validationRules: Array<string>
+  ): void {
     if (validationRules.indexOf(ValidationRuleObject.fileExist) > -1) {
       this.fileExists(path);
     }
@@ -103,7 +105,7 @@ export default class Validator {
       this.firstCommandIsPlaceCommand(firstCommand);
     }
     if (validationRules.indexOf(ValidationRuleObject.validPlaceCommand) > -1) {
-      this.validatePlaceCommand(firstCommand);
+      this.validatePlaceCommand(firstCommand, table);
     }
   }
 
