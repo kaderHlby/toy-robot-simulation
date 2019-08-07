@@ -4,8 +4,8 @@ Node.js cli application for simulation of a toy robot moving on a square table.
 
 ### Prerequisites
 
-- [NodeJS](http://www.nodejs.org)
-- Node Version Manager [nvm](https://github.com/nvm-sh/nvm) version 0.32.1
+- [NodeJS](http://www.nodejs.org) build and tested using node v10.16.0
+- Node Version Manager [nvm](https://github.com/nvm-sh/nvm) 
 
 ### Installing on Unix and macOS
 
