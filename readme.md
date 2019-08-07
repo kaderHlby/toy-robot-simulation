@@ -44,7 +44,11 @@ npm link robot
 ```bash
 robot -h
 ```
+or using the npm 
 
+```bash
+npm run robot-help
+```
 you should see
 
 ```
@@ -60,9 +64,17 @@ Options:
 ## Run application with test data
 
 ```bash
-robot -p ./testCases/exampleA.txt
-robot -p ./testCases/exampleB.txt
-robot -p ./testCases/exampleC.txt
+robot -p testCases/exampleA.txt
+robot -p testCases/exampleB.txt
+robot -p testCases/exampleC.txt
+```
+
+or using the npm 
+
+```bash
+npm run robot-path testCases/exampleA.txt
+npm run robot-path testCases/exampleB.txt
+npm run robot-path testCases/exampleC.txt
 ```
 
 ## Running the tests
