@@ -29,5 +29,5 @@ export declare class Robot {
     private right;
     private move;
     private report;
-    executeCommands(commands: Array<string>): void;
+    executeCommands(commands: Array<string>, log: boolean): void;
 }
