@@ -2,17 +2,13 @@
 import Validator from "./helpers/Validator";
 import CommandFileReader from "./helpers/CommandFileReader";
 import RobotManager from "./RobotManager";
-import { FaceObject } from "./objects/FaceObject";
-import { ConfigObject } from "./objects/ConfigObject";
-import { ValidationRuleObject } from "./objects/ValidationRuleObject";
 import Parser from "./helpers/Parser";
+import { ValidationRuleObject } from "./objects/ValidationRuleObject";
 
 const chalk = require("chalk");
 const clear = require("clear");
 const figlet = require("figlet");
-const path = require("path");
 const program = require("commander");
-const fs = require("fs");
 
 clear();
 console.log(
@@ -46,7 +42,7 @@ function run(path: any, log: any) {
     if (log) console.log(`robot was created at (${x},${y}) face: ${face}`);
     robot.executeCommands(commands, log);
   } catch (error) {
-    console.log(error.message); // todo handle all kinds of exceptions, for example: in case the file does not exit ask for the correct path.
+    console.log(error.message);
     return;
   }
 }

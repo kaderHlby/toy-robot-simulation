@@ -104,7 +104,7 @@ export class Robot {
     console.log(`\ncurrnet place : ${this._X},${this._Y},${this._face.name}`);
   }
 
-  public executeCommands(commands: Array<string>, log: boolean): void {
+  public executeCommands(commands: Array<string>, log?: boolean): void {
     if (log) console.log(`executing commands...\n`);
     commands.forEach(command => {
       if (command == CommandObject.MOVE) {
