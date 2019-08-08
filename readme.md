@@ -12,7 +12,7 @@ Node.js cli application for simulation of a toy robot moving on a square table.
 1. clone the repository
 
 ```bash
-git clone git@github.com:kaderHlby/toy-robot-simulation.git
+git clone https://github.com/kaderHlby/toy-robot-simulation.git
 ```
 
 2. Change to the repository directory:
@@ -27,10 +27,11 @@ cd toy-robot-simulation
 npm install -g typescript
 ```
 
-4. install npm dependencies
+4. install npm dependencies and compile
 
 ```bash
 npm install
+tsc -p .
 ```
 
 5. link robot
