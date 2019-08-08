@@ -27,10 +27,11 @@ cd toy-robot-simulation
 npm install -g typescript
 ```
 
-4. install npm dependencies
+4. install npm dependencies and compile
 
 ```bash
 npm install
+tsc -p .
 ```
 
 5. link robot
